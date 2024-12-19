@@ -1,4 +1,5 @@
-# Beauty Product Recommendation System
+# Personalized Beauty Product Recommendation System
+
 
 This application aimed to allow users to find beauty products according to their skin type, price-range, any special needs. The system provides personalized product recommendations, ingredient safety and effectiveness scores, exclusive product discovery, shopping bag functionality and a beauty routine tracker.
 
