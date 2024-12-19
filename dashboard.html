@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Tools Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'IBM Plex Mono', monospace; /* Using IBM Plex Mono */
+            margin: 0; 
+            padding: 0; 
+            background-color: #f7f7f7; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Ensures the content is aligned at the top */
+            align-items: center;
+        }
+        header { 
+            background-color: #ff6f61; 
+            color: white; 
+            padding: 10px 0; /* Reduced padding for compact header */
+            font-size: 24px; 
+            width: 100%;
+            text-align: center;
+            margin: 0; /* Removes any unwanted margin around the header */
+        }
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px; /* Adds a margin for the buttons */
+        }
+        button {
+            margin: 15px;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6f61;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        button:hover { 
+            background-color: #e65c52; 
+        }
+        button span {
+            margin-right: 10px;
+        }
+        @media (max-width: 600px) {
+            div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            button {
+                width: 80%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>🎨 Beauty Tools Dashboard</header>
+    <p>Explore the tools to find and analyze beauty products!</p>
+    <div>
+        <a href="/recommendations">
+            <button><span>✨</span> AI-Powered Recommendations</button>
+        </a>
+        <a href="/ingredient_scores">
+            <button><span>🧪</span> Ingredient Safety Scores</button>
+        </a>
+        <a href="/exclusive_discovery">
+            <button><span>🎁</span> Exclusive Product Discovery</button>
+        </a>
+        <a href="/shopping_bag">
+            <button><span>🛍️</span> My Shopping Bag</button>
+        </a>
+        <a href="/routine_tracker">
+            <button><span>📅</span> Beauty Routine Tracker</button>
+        </a>
+    </div>
+</body>
+</html>

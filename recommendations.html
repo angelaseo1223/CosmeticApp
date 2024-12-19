@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ AI-Powered Personalized Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'IBM Plex Mono', monospace; /* Using IBM Plex Mono */
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+        header {
+            background-color: #ff6f61;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #ffb0a9;
+            text-align: center;
+        }
+        p {
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        label, select, input, button {
+            margin-top: 10px;
+        }
+        button {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px; /* More subtle rounded corners like the dashboard buttons */
+            transition: all 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #e65c52; /* Darker shade for hover effect */
+            transform: scale(1.05); /* Slight zoom effect */
+        }
+        .go-back-btn {
+            background-color:rgb(255, 110, 97); /*coral-red*/
+            margin-top: 20px;
+            border-radius: 5px; /* Consistent with other buttons */
+        }
+        .product-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>✨ AI-Powered Personalized Recommendations</header>
+    <div class="container">
+        <h2>AI-Powered Personalized Recommendations</h2>
+        <p>
+            This feature provides personal product suggestions, depending on the user's skin type, budget(min-max), and preferred categories. 
+            It leverages sophisticated filtering and sorting algorithms to recommend the highest-rated and best-selling beauty products to suit your needs.
+        </p>
+
+        <form method="POST" action="/recommendations">
+            <label for="skin_type">Select Skin Type:</label>
+            <select name="skin_type" id="skin_type" required>
+                {% for skin in skin_types %}
+                    <option value="{{ skin }}" {% if skin == skin_type %}selected{% endif %}>{{ skin }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="budget_min">Minimum Budget ($):</label>
+            <input type="number" name="budget_min" id="budget_min" value="{{ budget_min }}" required>
+
+            <label for="budget_max">Maximum Budget ($):</label>
+            <input type="number" name="budget_max" id="budget_max" value="{{ budget_max }}" required>
+
+            <label for="category">Category:</label>
+            <select name="category" id="category">
+                <option value="">Select</option>
+                {% for cat in categories %}
+                    <option value="{{ cat }}" {% if cat == category %}selected{% endif %}>{{ cat }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Get Recommendations</button>
+        </form>
+
+        <a href="/dashboard">
+            <button class="go-back-btn">Go Back to Dashboard</button>
+        </a>
+
+        {% if products %}
+            <h2>Your Recommended Products</h2>
+            <div class="product-list">
+                {% for product in products %}
+                    <div class="product-card">
+                        <p><strong>{{ product.Product_Name }}</strong></p>
+                        <p>Brand: {{ product.Brand }} | Price: ${{ "%.2f"|format(product.Price_USD) }}</p>
+                        <p><strong>Tag:</strong> {{ product.Tag }}</p>
+                        <p>Rating: {{ "%.2f"|format(product.Rating) }} ★</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No recommendations available. Adjust your filters.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Ingredient Safety and Effectiveness Scores</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'IBM Plex Mono', monospace; /* IBM Plex Mono font */
+            background-color: #f7f7f7; 
+            margin: 0; 
+            padding: 0; 
+            color: #333; 
+        }
+        header { 
+            background-color: #ff6f61; 
+            color: white; 
+            text-align: center; 
+            padding: 20px; 
+            font-size: 24px; 
+        }
+        .container { 
+            width: 60%; 
+            margin: 30px auto; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+        }
+        h2 { 
+            color: #ffb0a9; /* Set the color to #ffb0a9 */
+            text-align: center; 
+        }
+        form { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+        label { 
+            font-weight: bold; 
+        }
+        select, button { 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+        }
+        button { 
+            background-color: #ff6f61; 
+            color: white; 
+            font-size: 16px; 
+            cursor: pointer; 
+        }
+        button:hover { 
+            background-color: #e65c52; 
+        }
+        .score-card { 
+            margin-top: 20px; 
+            text-align: center; 
+        }
+        .score { 
+            font-size: 20px; 
+            font-weight: bold; 
+            color: #ff6f61; 
+        }
+        .product-card { 
+            border: 1px solid #ddd; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+            background-color: #f9f9f9; 
+        }
+        .product-card h3 { 
+            margin: 0; 
+            color: #ff6f61; 
+        }
+        .product-card p { 
+            margin: 5px 0; 
+        }
+        .go-back-btn-container {
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .go-back-btn {
+            background-color:rgb(255, 110, 97); /*coral-red*/
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .go-back-btn:hover {
+            background-color: #e65c52;
+        }
+    </style>
+</head>
+<body>
+    <header>🧪 Ingredient Safety and Effectiveness Scores</header>
+
+    <div class="container">
+        <h2>Analyze Products by Ingredient</h2>
+        <p>
+            This feature provides information on which beauty products are safe and effective, based on their main ingredients. 
+            It is great because it not only gives you a score for effectiveness but also for safety.
+        </p>
+
+        <form method="POST" action="/ingredient_scores">
+            <label for="main_ingredient">Select Main Ingredient:</label>
+            <select name="main_ingredient" id="main_ingredient" required>
+                {% for ingredient in main_ingredients %}
+                <option value="{{ ingredient }}" {% if ingredient == selected_ingredient %}selected{% endif %}>
+                    {{ ingredient }}
+                </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Show Scores</button>
+        </form>
+    </div>
+
+    {% if selected_ingredient %}
+    <div class="container score-card">
+        <h2>Scores for {{ selected_ingredient }}</h2>
+        <p><strong>Effectiveness Score:</strong> <span class="score">{{ effectiveness_score }}%</span></p>
+        {% if safety_score %}
+        <p><strong>Safety Score:</strong> <span class="score">{{ "%.2f"|format(safety_score) }} ★</span></p>
+        {% else %}
+        <p>No ratings available for this ingredient.</p>
+        {% endif %}
+    </div>
+
+    {% if products %}
+    <div class="container">
+        <h2>Top Products with {{ selected_ingredient }}</h2>
+        {% for product in products %}
+        <div class="product-card">
+            <h3>{{ product.Product_Name }}</h3>
+            <p><strong>Brand:</strong> {{ product.Brand }}</p>
+            <p><strong>Price:</strong> ${{ "%.2f"|format(product.Price_USD) }}</p>
+            <p><strong>Rating:</strong> {{ "%.2f"|format(product.Rating) }} ★</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <div class="go-back-btn-container">
+        <a href="/dashboard" class="go-back-btn">Go Back to Dashboard</a>
+    </div>
+
+</body>
+</html>
